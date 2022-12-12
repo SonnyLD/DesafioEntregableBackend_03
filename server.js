@@ -1,5 +1,6 @@
 import express from "express";
 import fs from 'fs';
+import { title } from "process";
 
 const app = express();
 
@@ -32,8 +33,8 @@ class ProductManager {
     console.log(error);
     throw new Error(error);
   }
-}
-getProductById(idProducto) {
+} 
+getProductById(idProducto) { 
   const producto = this.#getProducts(idProducto);
   if (producto) {
     if (!producto.includes(idProducto)) producto.push(idProducto);
@@ -85,16 +86,16 @@ const PORT = 8080;
 
 
 app.get("/producto", (req, res) => {
-  res.json(productManager); 
+  res.json(productManager.getProducts); 
 });
 
-app.get("/producto/:pid", (req, res) => { 
+app.get("/producto/:idProducto", (req, res) => {  
   console.log(req);
-  const {pid} = req.params; 
-  console.log(pid);
-  const product = productManager.find((product) => product.id == pid);
-  res.json(product);
+  const {idProducto} = req.params;  
+  console.log(idProducto);
+  const producto = productManager.getProducts.find((producto) => producto.id == idProducto);
+  res.json(producto);
 });  
 app.listen(PORT, () => { 
-    console.log('🔥listening on port ${PORT}');
-});
+    console.log(`🔥listening on port ${PORT}`);
+});  
